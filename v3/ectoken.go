@@ -132,6 +132,7 @@ func Decrypt(key string, token string, verbose bool) (string, error) {
 	return string(params), nil
 }
 
+// base64 encodes and replaces characters just like urlsafe_b64encode
 func encode(b []byte) string {
 	token := base64.StdEncoding.EncodeToString(b)
 	token = strings.Replace(token, "=", "", -1)
@@ -141,6 +142,7 @@ func encode(b []byte) string {
 	return token
 }
 
+// \re-replaces characters just like urlsafe_b64decode and base64 decodes string
 func decode(token string) ([]byte, error) {
 	token = strings.Replace(token, "-", "+", -1)
 	token = strings.Replace(token, "_", "/", -1)
@@ -160,6 +162,7 @@ func decode(token string) ([]byte, error) {
 	return decoded, nil
 }
 
+// random bytes used for initialization vectors
 func createRandomBytes(size int) ([]byte, error) {
 	b := make([]byte, size)
 	_, err := rand.Read(b)
@@ -170,6 +173,7 @@ func createRandomBytes(size int) ([]byte, error) {
 	return b, nil
 }
 
+// SHA256 hashes a string
 func createHash(s string) []byte {
 	h := sha256.New()
 	h.Write([]byte(s))
@@ -177,6 +181,7 @@ func createHash(s string) []byte {
 	return h.Sum(nil)
 }
 
+// determines if a string is alphanumeric
 func isAlphanumeric(s string) bool {
 	r := regexp.MustCompile(`^[a-zA-Z0-9]*$`)
 	return r.MatchString(s)
