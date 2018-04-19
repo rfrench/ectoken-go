@@ -132,7 +132,10 @@ func Decrypt(key string, token string, verbose bool) (string, error) {
 	return string(params), nil
 }
 
+<<<<<<< HEAD
 // base64 encodes and replaces characters just like urlsafe_b64encode
+=======
+>>>>>>> f7fcf6cf4894c1c5001e0911b00502c17657000a
 func encode(b []byte) string {
 	token := base64.StdEncoding.EncodeToString(b)
 	token = strings.Replace(token, "=", "", -1)
@@ -142,7 +145,10 @@ func encode(b []byte) string {
 	return token
 }
 
+<<<<<<< HEAD
 // \re-replaces characters just like urlsafe_b64decode and base64 decodes string
+=======
+>>>>>>> f7fcf6cf4894c1c5001e0911b00502c17657000a
 func decode(token string) ([]byte, error) {
 	token = strings.Replace(token, "-", "+", -1)
 	token = strings.Replace(token, "_", "/", -1)
@@ -162,7 +168,10 @@ func decode(token string) ([]byte, error) {
 	return decoded, nil
 }
 
+<<<<<<< HEAD
 // random bytes used for initialization vectors
+=======
+>>>>>>> f7fcf6cf4894c1c5001e0911b00502c17657000a
 func createRandomBytes(size int) ([]byte, error) {
 	b := make([]byte, size)
 	_, err := rand.Read(b)
@@ -173,7 +182,10 @@ func createRandomBytes(size int) ([]byte, error) {
 	return b, nil
 }
 
+<<<<<<< HEAD
 // SHA256 hashes a string
+=======
+>>>>>>> f7fcf6cf4894c1c5001e0911b00502c17657000a
 func createHash(s string) []byte {
 	h := sha256.New()
 	h.Write([]byte(s))
@@ -181,7 +193,10 @@ func createHash(s string) []byte {
 	return h.Sum(nil)
 }
 
+<<<<<<< HEAD
 // determines if a string is alphanumeric
+=======
+>>>>>>> f7fcf6cf4894c1c5001e0911b00502c17657000a
 func isAlphanumeric(s string) bool {
 	r := regexp.MustCompile(`^[a-zA-Z0-9]*$`)
 	return r.MatchString(s)
