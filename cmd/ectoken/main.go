@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
+
+	"github.com/rfrench/ectoken-go"
 )
 
 func main() {
