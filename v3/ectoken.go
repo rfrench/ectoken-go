@@ -10,7 +10,6 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
-	"strings"
 )
 
 const (
@@ -72,7 +71,7 @@ func Encrypt(key string, params string, verbose bool) (string, error) {
 		fmt.Printf("+-------------------------------------------------------------\n")
 	}
 
-	return encode(token), nil
+	return base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(token), nil
 }
 
 // Decrypt decrypts a version 3 authentication token
@@ -98,7 +97,7 @@ func Decrypt(key string, token string, verbose bool) (string, error) {
 	}
 
 	// decode token
-	decodedToken, err := decode(token)
+	decodedToken, err := base64.URLEncoding.WithPadding(base64.NoPadding).DecodeString(token)
 	if err != nil {
 		return "", err
 	}
@@ -130,36 +129,6 @@ func Decrypt(key string, token string, verbose bool) (string, error) {
 	}
 
 	return string(params), nil
-}
-
-// base64 encodes and replaces characters just like urlsafe_b64encode
-func encode(b []byte) string {
-	token := base64.StdEncoding.EncodeToString(b)
-	token = strings.Replace(token, "=", "", -1)
-	token = strings.Replace(token, "+", "-", -1)
-	token = strings.Replace(token, "/", "_", -1)
-
-	return token
-}
-
-// re-replaces characters just like urlsafe_b64decode and base64 decodes string
-func decode(token string) ([]byte, error) {
-	token = strings.Replace(token, "-", "+", -1)
-	token = strings.Replace(token, "_", "/", -1)
-
-	switch len(token) % 4 {
-	case 2:
-		token += "=="
-	case 3:
-		token += "="
-	}
-
-	decoded, err := base64.StdEncoding.DecodeString(token)
-	if err != nil {
-		return nil, err
-	}
-
-	return decoded, nil
 }
 
 // random bytes used for initialization vectors
