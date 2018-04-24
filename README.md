@@ -7,10 +7,11 @@
 Token-Based Authentication safeguards against hotlinking by adding a token requirement to requests for content secured by it. This token, which must be defined in the request URL's query string, defines the criteria that must be met before the requested content may be served via the CDN. This repository contains the following token generation resources:
 - [Linux binaries and Windows executable](https://github.com/VerizonDigital/ectoken/releases/latest)
 
-## golang Token Generator for EdgeCast Token-Based Authentication
-* **Encrypt**(key string, params string, verbose bool)
-* **Decrypt**(key string, token string, verbose bool)
-
+## Functions
+```go
+Encrypt(key string, params string, verbose bool)
+Decrypt(key string, token string, verbose bool)
+```
 ## Install
 First use "go get" to install the latest version of the library.
 
