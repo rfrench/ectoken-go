@@ -11,11 +11,14 @@ Token-Based Authentication safeguards against hotlinking by adding a token requi
 * **Encrypt**(key string, params string, verbose bool)
 * **Decrypt**(key string, token string, verbose bool)
 
+## Install
+First use "go get" to install the latest version of the library.
+
+    $ go get github.com/VerizonDigital/ectoken-go
+
 ## Example
 ```go
-import (
-	"github.com/VerizonDigital/ectoken-go/v3"
-)
+import "github.com/VerizonDigital/ectoken-go/v3"
 
 // encrypt
 token, err := v3.Encrypt("keyvalue", "ec_expire=1257642471&ec_clientip=11.22.33.1", false)
