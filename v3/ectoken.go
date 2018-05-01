@@ -31,7 +31,7 @@ func Encrypt(key string, params string, verbose bool) (string, error) {
 	}
 
 	// sha256 hash key
-	hash := createHash(key)
+	hash := hashKey(key)
 
 	// create cipher
 	block, err := aes.NewCipher(hash)
@@ -46,7 +46,7 @@ func Encrypt(key string, params string, verbose bool) (string, error) {
 	}
 
 	// create iv
-	iv, err := createRandomBytes(ivSize)
+	iv, err := randomBytes(ivSize)
 	if err != nil {
 		return "", err
 	}
@@ -82,7 +82,7 @@ func Decrypt(key string, token string, verbose bool) (string, error) {
 	}
 
 	// sha256 hash key
-	hash := createHash(key)
+	hash := hashKey(key)
 
 	// create cipher
 	block, err := aes.NewCipher(hash)
@@ -132,7 +132,7 @@ func Decrypt(key string, token string, verbose bool) (string, error) {
 }
 
 // random bytes used for initialization vectors
-func createRandomBytes(size int) ([]byte, error) {
+func randomBytes(size int) ([]byte, error) {
 	b := make([]byte, size)
 	_, err := rand.Read(b)
 	if err != nil {
@@ -142,10 +142,10 @@ func createRandomBytes(size int) ([]byte, error) {
 	return b, nil
 }
 
-// SHA256 hashes a string
-func createHash(s string) []byte {
+// SHA256 hashes the key
+func hashKey(key string) []byte {
 	h := sha256.New()
-	h.Write([]byte(s))
+	h.Write([]byte(key))
 
 	return h.Sum(nil)
 }

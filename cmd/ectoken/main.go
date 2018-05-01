@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/rfrench/ectoken-go/v3"
+	"github.com/VerizonDigital/ectoken-go/v3"
 )
 
 func main() {

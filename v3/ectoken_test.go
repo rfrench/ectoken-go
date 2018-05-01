@@ -71,7 +71,7 @@ func TestEncryptEmptyParams(t *testing.T) {
 
 func TestEncryptLargeParams(t *testing.T) {
 	// should fail when the params are longer than 512 characters
-	random, err := createRandomBytes(257)
+	random, err := randomBytes(257)
 	longParams := hex.EncodeToString(random)
 
 	_, err = Encrypt(key, longParams, false)
