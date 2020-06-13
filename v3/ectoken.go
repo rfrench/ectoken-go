@@ -7,7 +7,6 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
-	"errors"
 	"fmt"
 	"regexp"
 )
@@ -21,13 +20,13 @@ const (
 func Encrypt(key string, params string, verbose bool) (string, error) {
 	// validate key
 	if (len(key) <= 0) || (!isAlphanumeric(key)) {
-		return "", errors.New("key must be at least 1 character in length and only contain alphanumeric characters")
+		return "", &InvalidKeyError{}
 	}
 
 	// validate params length
 	paramsLength := len(params)
 	if (paramsLength <= 0) || (paramsLength > 512) {
-		return "", errors.New("params must between 1 and 512 characters in length")
+		return "", &ParamLengthError{}
 	}
 
 	// sha256 hash key
@@ -78,7 +77,7 @@ func Encrypt(key string, params string, verbose bool) (string, error) {
 func Decrypt(key string, token string, verbose bool) (string, error) {
 	// validate key
 	if (len(key) <= 0) || (!isAlphanumeric(key)) {
-		return "", errors.New("key must be at least 1 character in length and only contain alphanumeric characters")
+		return "", &InvalidKeyError{}
 	}
 
 	// sha256 hash key

@@ -48,7 +48,7 @@ func TestEncryptVerbose(t *testing.T) {
 func TestEncryptNonAlphanumericKey(t *testing.T) {
 	// should fail to create a token when the key is not alphanumeric
 	_, err := Encrypt("_"+key, params, false)
-	if err == nil {
+	if _, ok := err.(*InvalidKeyError); !ok {
 		t.Errorf("expected encrypting a token with a non alphanumeric key to return an error")
 	}
 }
@@ -56,7 +56,7 @@ func TestEncryptNonAlphanumericKey(t *testing.T) {
 func TestEncryptEmptyKey(t *testing.T) {
 	// should fail to create a token when the key is empty
 	_, err := Encrypt("", params, false)
-	if err == nil {
+	if _, ok := err.(*InvalidKeyError); !ok {
 		t.Errorf("expected encrypting a token to fail when the key is empty")
 	}
 }
@@ -64,7 +64,7 @@ func TestEncryptEmptyKey(t *testing.T) {
 func TestEncryptEmptyParams(t *testing.T) {
 	// should fail to create a token when params is empty
 	_, err := Encrypt(key, "", false)
-	if err == nil {
+	if _, ok := err.(*ParamLengthError); !ok {
 		t.Errorf("expected encrypting a token to fail when params is empty")
 	}
 }
@@ -75,7 +75,7 @@ func TestEncryptLargeParams(t *testing.T) {
 	longParams := hex.EncodeToString(random)
 
 	_, err = Encrypt(key, longParams, false)
-	if err == nil {
+	if _, ok := err.(*ParamLengthError); !ok {
 		t.Errorf("Encrypt did not fail to create token when params is longer than 512 characters")
 	}
 }

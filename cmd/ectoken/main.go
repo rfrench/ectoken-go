@@ -4,8 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 
-	"github.com/VerizonDigital/ectoken-go/v3"
+	v3 "github.com/VerizonDigital/ectoken-go/v3"
 )
 
 func main() {
@@ -21,9 +22,12 @@ func main() {
 	if *decrypt == false {
 		token, err := v3.Encrypt(*key, *params, *verbose)
 		if err != nil {
+			fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 			log.Fatal(err)
 		}
 		fmt.Printf(token)
+
+		return
 	} else {
 		params, err := v3.Decrypt(*key, *token, *verbose)
 		if err != nil {
